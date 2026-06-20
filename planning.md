@@ -85,6 +85,86 @@ These labels are mostly separable by intent, not content:
 
 To maintain exclusivity in annotation, the primary rule is:  
 **Classify by dominant communicative intent, not surface meaning.**
+# planning.md — Difficult Labeling Cases (r/nba Dataset)
+
+## 1. Mixed interview + fake breaking news ending
+
+**Text (Row 4):**  
+> "Interviewer: Jaxson Hayes got Slovenian citizenship... Luka: ... THE NEW YORK KNICKS ARE YOUR 2026 NBA CHAMPIONS"
+
+### Why this is difficult
+- Begins as a realistic interview exchange (informational tone)
+- Ends with an exaggerated, clearly false championship claim
+- Blends factual discourse format with meme escalation
+
+### Candidate labels
+- Informational / News / Update  
+- Meme / Humor  
+- Hybrid (not allowed in schema)
+
+### Final label
+**Meme / Humor**
+
+### Reasoning
+- The final statement is intentionally absurd and non-factual
+- The structure mimics “breaking news” meme formatting common on r/nba
+- Overall communicative intent is satire, not reporting
+
+---
+
+## 2. Emotional quote labeled as “[Highlight]” but no gameplay
+
+**Text (Row 6):**  
+> "[Highlight] 'Thank you, mama. I appreciate you getting me one.' - Karl-Anthony Towns"
+
+### Why this is difficult
+- Tagged as “Highlight” but contains no on-court action
+- Pure emotional / personal moment
+- Could fit both feature storytelling or highlight formatting
+
+### Candidate labels
+- Highlight / Update  
+- Feature  
+- Informational / News / Feature
+
+### Final label
+**Feature**
+
+### Reasoning
+- Content is human-interest oriented (emotion, personality)
+- Not describing a play or game event
+- “Highlight” is stylistic Reddit labeling, not functional classification
+
+---
+
+## 3. Historical NBA exclusion post (factual but Reddit-framed)
+
+**Text (Row 8):**  
+> "When the NBA was formed via merger in 1949... the Dayton Rens were excluded..."
+
+### Why this is difficult
+- Structured like a Reddit informational post
+- Contains historical fact + contextual explanation
+- Could be interpreted as news-style or feature-style writing
+
+### Candidate labels
+- Informational / News / Update  
+- Feature
+
+### Final label
+**Informational / News / Update**
+
+### Reasoning
+- Core content is factual historical reporting
+- No narrative framing or opinion-driven storytelling
+- Reads like an informational explainer rather than a feature story
+
+---
+
+## Summary of decision rules used
+- Satirical exaggeration overrides mixed formats → Meme / Humor  
+- Emotional player quotes without gameplay → Feature  
+- Historical factual posts → Informational / News / Update  
 
 ---
 
