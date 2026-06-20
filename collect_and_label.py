@@ -10,13 +10,30 @@ HEADERS = {"User-Agent": "nba-labeler"}
 # ---------------- FETCH REAL r/nba DATA (NO AUTH) ----------------
 def fetch(limit=200):
     url = f"https://www.reddit.com/r/nba/hot.json?limit={limit}"
-    res = requests.get(url, headers=HEADERS)
-    data = res.json()["data"]["children"]
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (compatible; nba-labeler/1.0)"
+    }
+
+    res = requests.get(url, headers=headers)
+
+    # 🚨 debug safety check
+    if res.status_code != 200:
+        print("HTTP ERROR:", res.status_code)
+        print(res.text[:300])
+        return []
+
+    try:
+        json_data = res.json()
+    except Exception:
+        print("NOT JSON RESPONSE:")
+        print(res.text[:300])
+        return []
 
     posts = []
-    for p in data:
+    for p in json_data["data"]["children"]:
         d = p["data"]
-        text = d.get("title", "") + " " + d.get("selftext", "")
+        text = (d.get("title") or "") + " " + (d.get("selftext") or "")
         posts.append(text.strip())
 
     return posts
