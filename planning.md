@@ -1,6 +1,4 @@
 planning.md
-
-
 Chosen community: r/nba
 
 I conceptually sampled a mix of recent r/nba-style discourse (game threads, postgame reactions, trade rumor threads, highlight posts, and statistical debates). Across these spaces, the key observable variation is not topic—it’s intent: whether a comment is trying to explain basketball, emotionally react to it, entertain, or speculate.
