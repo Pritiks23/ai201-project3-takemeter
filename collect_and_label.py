@@ -2,7 +2,7 @@ import pandas as pd
 from groq import Groq
 from tqdm import tqdm
 
-client = Groq(api_key="YOUR_GROQ_API_KEY")
+client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
 LABELS = [
     "Analytical Breakdown",
