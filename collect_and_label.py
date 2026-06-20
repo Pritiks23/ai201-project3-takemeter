@@ -1,45 +1,37 @@
-import praw
+import requests
 import pandas as pd
-from tqdm import tqdm
 from groq import Groq
-
-# ---------------- CONFIG ----------------
-REDDIT_LIMIT = 300
-OUTPUT_FILE = "nba_labeled.csv"
+from tqdm import tqdm
 
 client = Groq(api_key="YOUR_GROQ_API_KEY")
 
-reddit = praw.Reddit(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-    user_agent="nba-labeling"
-)
+HEADERS = {"User-Agent": "nba-labeler"}
 
-LABELS = [
-    "Analytical Breakdown",
-    "Hot Take / Reactionary Opinion",
-    "Meme / Humor",
-    "Informational / News"
-]
+# ---------------- FETCH REAL r/nba DATA (NO AUTH) ----------------
+def fetch(limit=200):
+    url = f"https://www.reddit.com/r/nba/hot.json?limit={limit}"
+    res = requests.get(url, headers=HEADERS)
+    data = res.json()["data"]["children"]
 
-# ---------------- DATA COLLECTION ----------------
-def collect():
-    data = []
-    for post in reddit.subreddit("nba").hot(limit=REDDIT_LIMIT):
-        text = post.title + (" " + post.selftext if post.selftext else "")
-        data.append({"text": text})
-    return pd.DataFrame(data)
+    posts = []
+    for p in data:
+        d = p["data"]
+        text = d.get("title", "") + " " + d.get("selftext", "")
+        posts.append(text.strip())
+
+    return posts
 
 # ---------------- GROQ LABELING ----------------
 def label(text):
     prompt = f"""
-Label this r/nba post with ONE of:
+Classify this r/nba post into ONE label:
+
 - Analytical Breakdown
 - Hot Take / Reactionary Opinion
 - Meme / Humor
 - Informational / News
 
-Return only the label.
+Return ONLY the label.
 
 Text:
 {text}
@@ -53,13 +45,18 @@ Text:
 
     return res.choices[0].message.content.strip()
 
-# ---------------- MAIN ----------------
-df = collect()
+# ---------------- PIPELINE ----------------
+posts = fetch(200)
 
-df["ai_label"] = [label(t) for t in tqdm(df["text"])]
-df["label"] = ""   # human fill later
-df["notes"] = ""
+rows = []
+for p in tqdm(posts):
+    rows.append({
+        "text": p,
+        "label": label(p),
+        "notes": ""
+    })
 
-df.to_csv(OUTPUT_FILE, index=False)
+df = pd.DataFrame(rows)
+df.to_csv("nba_labeled.csv", index=False)
 
-print("Saved:", OUTPUT_FILE)
+print("Saved nba_labeled.csv")
