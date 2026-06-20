@@ -1,6 +1,13 @@
-id, text,label
-1,You see the drip…I’m always fresh if the Feds watching that’s what 2 chainz said,Meme / Humor
-2, THE OKLAHOMA CITY THUNDER HAVE BEEN ELIMINATED FROM 2026 NBA CHAMPIONSHIP CONTENTION,Informational / News / Update
-3, "Karl-Anthony Towns says he'd take a $100,000,000 pay cut to keep the Knicks together",Informational / News / Update
-4,"Interviewer: Jaxson Hayes got Slovenian citizenship, what is your view about that. Luka: Yes... I basically had nothing to do with that, so I'm only playing for national team. But yes, boy is really okay. Good player, so it's amazing. THE NEW YORK KNICKS ARE YOUR 2026 NBA CHAMPIONS",Meme / Humor
-5, How Knicks' OG Anunoby is helping NYC shelter cats find their forever homes,Informational / News / Feature
+id,text,label
+1.0,You see the drip…I’m always fresh if the Feds watching that’s what 2 chainz said,Meme / Humor
+2.0,THE OKLAHOMA CITY THUNDER HAVE BEEN ELIMINATED FROM 2026 NBA CHAMPIONSHIP CONTENTION,Informational / News / Update
+3.0,"Karl-Anthony Towns says he'd take a $100,000,000 pay cut to keep the Knicks together",Informational / News / Update
+4.0,"Interviewer: Jaxson Hayes got Slovenian citizenship, what is your view about that. Luka: Yes... I basically had nothing to do with that, so I'm only playing for national team. But yes, boy is really okay. Good player, so it's amazing. THE NEW YORK KNICKS ARE YOUR 2026 NBA CHAMPIONS",Meme / Humor
+5.0,How Knicks' OG Anunoby is helping NYC shelter cats find their forever homes,Informational / News / Feature
+6.0,"[Highlight] ""Thank you, mama. I appreciate you getting me one."" - Karl-Anthony Towns",Informational / News / Feature
+7.0 ,Jose Alvarado on Victor Wembanyama not shaking hands with the Knicks: “I got mixed emotions… the way he did it was a little too crazy for me because I loved how he competed during the game.”,Hot Take / Reactionary Opinion
+8.0,"When the NBA was formed via merger in 1949, eight of nine NBL teams entered the new NBA. The ninth, the all-Black, Black-owned Dayton Rens, was excluded. After inheriting the NBL’s worst record midseason, the Rens had a playoff-caliber mark, but the NBA cited the inherited record to disqualify them",Informational / News / Update
+9.0,[Highlight] OG Anunoby tips the ball in to give the Knicks the lead,Informational / News / Update
+10.0,"[Former Laker Head Athletic Trainer Gary Vitti] “I love Shaq, I absolutely adore him… but you had to be looking over your shoulder all the time. All the time.”",Informational / News / Feature
+11.0,[Highlight] KAT and Mayor Mamdani lean back together on the Knicks’ float,Informational / News / Update
+
