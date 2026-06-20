@@ -1,49 +1,54 @@
-import requests
 import pandas as pd
 from groq import Groq
 from tqdm import tqdm
 
 client = Groq(api_key="YOUR_GROQ_API_KEY")
 
-HEADERS = {"User-Agent": "nba-labeler"}
+LABELS = [
+    "Analytical Breakdown",
+    "Hot Take / Reactionary Opinion",
+    "Meme / Humor",
+    "Informational / News"
+]
 
-# ---------------- FETCH REAL r/nba DATA (NO AUTH) ----------------
-import requests
+def generate_dataset(n=220):
+    prompt = f"""
+Generate {n} realistic Reddit r/nba posts/comments.
 
-def fetch(limit=200):
-    url = f"https://old.reddit.com/r/nba/hot.json?limit={limit}"
+Include:
+- game analysis
+- emotional reactions
+- memes
+- trade/news updates
+- player debates
 
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36"
-    }
+Make them look like real Reddit content.
 
-    res = requests.get(url, headers=headers, timeout=10)
+Return as a numbered list.
+"""
 
-    if res.status_code != 200:
-        print("HTTP ERROR:", res.status_code)
-        print(res.text[:200])
-        return []
+    res = client.chat.completions.create(
+        model="llama3-70b-8192",
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.8
+    )
 
-    data = res.json()["data"]["children"]
+    return [
+        x.strip("- ").strip()
+        for x in res.choices[0].message.content.split("\n")
+        if x.strip()
+    ]
 
-    posts = []
-    for p in data:
-        d = p["data"]
-        text = (d.get("title") or "") + " " + (d.get("selftext") or "")
-        posts.append(text.strip())
-
-    return posts
-# ---------------- GROQ LABELING ----------------
 def label(text):
     prompt = f"""
-Classify this r/nba post into ONE label:
+Classify into ONE:
 
 - Analytical Breakdown
 - Hot Take / Reactionary Opinion
 - Meme / Humor
 - Informational / News
 
-Return ONLY the label.
+Return only label.
 
 Text:
 {text}
@@ -57,8 +62,7 @@ Text:
 
     return res.choices[0].message.content.strip()
 
-# ---------------- PIPELINE ----------------
-posts = fetch(200)
+posts = generate_dataset(220)
 
 rows = []
 for p in tqdm(posts):
@@ -68,7 +72,6 @@ for p in tqdm(posts):
         "notes": ""
     })
 
-df = pd.DataFrame(rows)
-df.to_csv("nba_labeled.csv", index=False)
+pd.DataFrame(rows).to_csv("nba_labeled.csv", index=False)
 
 print("Saved nba_labeled.csv")
