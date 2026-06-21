@@ -20,7 +20,7 @@ Meme / Humor                      41
 Hot Take / Reactionary Opinion    41  
 Analytical                        26  
 
-3. Baseline Model (Groq LLM)
+## 3. Baseline Model (Groq LLM)
 Overall Performance
 Accuracy: 0.871 (31/31 parseable responses)
 Per-class Metrics
@@ -47,7 +47,7 @@ Analytical vs Hot Take confusion
 Occasional blending of Informational and Analytical content
 
 The main hypothesis is that the model relies heavily on surface-level lexical cues and tone, rather than discourse intent or reasoning structure.
-4. Fine-tuned Model (DistilBERT)
+## 4. Fine-tuned Model (DistilBERT)
 Overall Performance
 Accuracy: 0.516 (17/31 correct)
 Per-class Metrics
@@ -79,7 +79,7 @@ It failed to learn:
 Meme structure entirely
 Analytical reasoning patterns
 
-5. Error Analysis (Fine-tuned Model)
+## 5. Error Analysis (Fine-tuned Model)
 
 Below are representative misclassified examples and analysis:
 
@@ -130,7 +130,7 @@ Predicted: Hot Take
 
 Issue: Generalized exaggeration interpreted as opinion instead of humorous commentary.
 
-6. Sample Fine-tuned Predictions
+## 6. Sample Fine-tuned Predictions
 Text	Predicted Label	Confidence	Notes
 Sabonis elite passing big analysis continues	Informational	0.28	Reasonable due to stat-like phrasing
 Hot take defense wins championships is outdated framing	Informational	0.27	Misread opinion framing as neutral update
@@ -140,14 +140,15 @@ Giannis: We just need to be more physical	Hot Take	0.27	Quote structure triggere
 Correct Example
 Text	Predicted	Confidence	Why correct
 Knicks continue strong defensive rating streak	Informational	0.31	Matches news-style reporting with metrics
-7. Model Comparison
+
+## 7. Model Comparison
 Model	Accuracy
 Zero-shot baseline (Groq)	0.871
 Fine-tuned DistilBERT	0.516
 
 Regression after fine-tuning: -0.355
 
-8. Key Findings & Interpretation
+## 8. Key Findings & Interpretation
 What the model captured well
 Informational posts with clear “news-like” structure
 Explicit mentions of games, clips, or updates (baseline especially)
@@ -155,7 +156,7 @@ What the model failed to capture
 Meme vs Hot Take distinction (collapsed entirely in fine-tuned model)
 Analytical reasoning structure (not just keywords like “analysis”)
 Discourse intent (humor vs opinion vs reporting)
-9. Spec Reflection
+## 9. Spec Reflection
 What the spec helped with
 
 The label definitions forced a clear separation between:
@@ -177,7 +178,7 @@ Collapsed overlapping semantic regions (especially Meme vs Hot Take)
 
 This indicates that the dataset design is more separable for LLM prompting than for a small fine-tuned encoder model.
 
-10. AI Usage Disclosure
+## 10. AI Usage Disclosure
 Instance 1: Baseline debugging (prompt + parsing issue)
 Prompted AI to diagnose why all outputs were unparseable
 It identified .lower() normalization and substring matching as the issue
@@ -189,7 +190,7 @@ Meme ↔ Hot Take
 Analytical ↔ Hot Take
 Informational ↔ Analytical overlap
 I verified these patterns manually on sampled errors
-11. Conclusion
+## 11. Conclusion
 
 The baseline LLM performs strongly due to rich semantic understanding and discourse sensitivity, while the fine-tuned DistilBERT model struggles due to limited capacity to encode nuanced intent differences between closely related classes. The dominant challenge in this task is not topic recognition, but stance and discourse framing separation, particularly between humor, opinion, and analytical reasoning.
 
