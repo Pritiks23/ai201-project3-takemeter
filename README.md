@@ -259,6 +259,19 @@ The baseline LLM performs strongly due to rich semantic understanding and discou
 
 ---
 
+
 ### Conclusion: Why the model collapsed
 
-The fine-tuned DistilBERT model collapsed to significantly lower performance because it failed to
+The fine-tuned DistilBERT model collapsed to significantly lower performance because it failed to learn fine-grained discourse boundaries between labels that rely on intent rather than surface-level wording. Instead of distinguishing between humor, opinion, and analytical reasoning, the model primarily clustered examples based on lexical similarity, causing it to merge multiple categories into a few dominant predictions like Hot Take and Informational.
+
+This issue was further amplified by class imbalance, particularly the limited number of Analytical and Meme examples, which prevented the model from learning stable decision boundaries for these classes. As a result, the model overfit to common keywords and structural cues rather than true discourse meaning, leading to poor generalization compared to the zero-shot baseline.
+
+## Extra credit: 
+## Inter-Annotator Reliability  
+We measured inter-annotator agreement using a subset of 30+ posts labeled independently by two annotators. The results showed strong overall agreement, indicating that the label definitions were generally clear and consistently applied across annotators. Disagreements were mainly concentrated in edge cases between *Hot Take* and *Analytical*, where tone and intent were ambiguous.
+
+## Confidence Calibration  
+We observed a weak but noticeable relationship between confidence scores and prediction accuracy in the fine-tuned model. Higher confidence predictions were more often correct, but there were still several overconfident misclassifications, especially between *Hot Take* and *Informational* categories.
+
+## Error Pattern Analysis  
+A consistent error pattern emerged between *Analytical* and *Hot Take / Reactionary Opinion*, where evaluative basketball commentary was frequently misclassified as reactionary due to surface-level wording. The model also struggled with *Meme / Humor*, often confusing slang-heavy humorous posts as opinion-based content, showing a systematic failure to capture discourse intent over lexical cues.
