@@ -1,0 +1,13 @@
+{
+  "baseline_accuracy": 0.871,
+  "finetuned_accuracy": 0.5161,
+  "improvement": -0.3548,
+  "test_set_size": 31,
+  "label_map": {
+    "Analytical": 0,
+    "Hot Take / Reactionary Opinion": 1,
+    "Meme / Humor": 2,
+    "Informational / News / Update": 3
+  },
+  "model": "distilbert-base-uncased"
+}
